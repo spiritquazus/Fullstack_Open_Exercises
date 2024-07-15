@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant browser
+    participant actor
+    participant server
+
+    actor-->>browser: INPUT value in HTML input Element <input type="text" name="note" wfd-id="id0">
+    actor->>browser: SUBMIT form <input type="submit" value="Save" wfd-id="id1">
+    browser->>server: POST form submit https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+    server-->>browser: [{content: "test", date: "2024-07-14T12:10:54.672Z"},…]
+    deactivate server
+
+    Note right of user: user inputs a value (or none) in the input element of type text, then presses the linked submit button. Browser handles the next process.
+    Note right of browser: The browser submits a POST request to "/new_note_spa" end point. However, because the event listener has an anonymous function this time with e.preventDefault(), the default behavior of page refresh does not occur.
+    Note right of browser: The browser instead calls a different function called redrawNotes() which will recreate the <ul> element and populate it with each <li> based on the notes array, then immediately update the "notes" <div> container.
+

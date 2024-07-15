@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant browser
+    participant actor
+    participant server
+
+    actor-->>browser: INPUT value in HTML input Element <input type="text" name="note" wfd-id="id0">
+    actor->>browser: SUBMIT form <input type="submit" value="Save" wfd-id="id1">
+    browser->>server: POST form submit https://studies.cs.helsinki.fi/exampleapp/new_note
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
+    activate server
+    server-->>browser: [{content: "test", date: "2024-07-14T12:10:54.672Z"},…]
+    deactivate server
+    
+    Note right of user: user inputs a value (or none) in the input element of type text, then presses the linked submit button. Browser handles the next process.
+    Note right of browser: The browser submits a POST request to "/new_note" end point, based on the form's input value and execute callback of the function that pushes it to the array of objects called data. The default behavior in HTML of a submit button is to refresh the page after submission. 
+    Note right of server: Reloads the page ("/notes" end point) and process the HTML, CSS and JS file as usual, with the new note being included as the last index of the "note" array. Thus rendering the new note as the last child of the unordered list element.
